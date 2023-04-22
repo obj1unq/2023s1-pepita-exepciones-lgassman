@@ -1,0 +1,39 @@
+import pepita.*
+
+//
+// Suponiendo que milena tiene a pepita y a pepon, con sus respectivas energias iniciales (100 y 30).
+// 
+// * tanto pepita como pepon pueden volar 4 kms. Por lo tanto milena puede movilizarlas.
+// * pepita puede volar 6 kms, pero pepon no. Por lo tanto milena no puede movilizarlas. (Si se intenta movilizarlas ambas deben quedar con su energia inicial)
+// * ni pepita ni pepon pueden volar 100 km.
+
+describe "movilizar" {
+	
+	method initialize() {
+		milena.agregar(pepita)
+		milena.agregar(pepon)	
+	}
+	
+	test "volar 4" {
+	
+		milena.movilizar(4)
+		assert.equals(86, pepita.energia())
+		assert.equals(2, pepon.energia())
+		
+	}
+	
+	test "volar 6" {
+	
+		assert.throwsException({milena.movilizar(6)})
+		assert.equals(100, pepita.energia())
+		assert.equals(30, pepon.energia())
+	}
+	
+	test "volar 100" {
+	
+		assert.throwsException({milena.movilizar(100)})
+		assert.equals(100, pepita.energia())
+		assert.equals(30, pepon.energia())
+	}
+
+}
